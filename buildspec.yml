@@ -1,0 +1,6 @@
+version: 0.2
+phases:
+  build:
+    commands:
+     - echo "Building the project..."
+     - docker build -t sample-java-app:latest .
