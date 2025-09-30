@@ -1,13 +1,18 @@
-# --- ビルドステージ ---
-FROM --platform=linux/amd64 maven:3.9.7-eclipse-temurin-17 AS build
-WORKDIR /build
-COPY app/pom.xml .
-COPY app/src ./src
-RUN mvn clean package -DskipTests
+FROM public.ecr.aws/amazonlinux/amazonlinux:latest 
 
-# --- 実行ステージ ---
-FROM --platform=linux/amd64 amazoncorretto:17-alpine
+# 基本的なツールをインストール
+RUN yum update -y && \
+    yum install -y --allowerasing \
+    curl \
+    wget \
+    unzip \
+    tar \
+    git \
+    vim \
+    && yum clean all
+
+# 作業ディレクトリを設定
 WORKDIR /app
-COPY --from=build /build/target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# アプリケーションの実行
+RUN echo "Hello World"

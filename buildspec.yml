@@ -1,6 +1,7 @@
 version: 0.2
+
 phases:
   build:
     commands:
-     - echo "Building simple Java app..."
-     - docker build -t sample-java-app:latest .
+      - docker buildx build . 
+      - docker run helloworld echo "Hello, World!"
