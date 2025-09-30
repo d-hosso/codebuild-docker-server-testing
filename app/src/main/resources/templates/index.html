@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+    <h1 th:text="${message}">Hello, Spring Boot!</h1>
+    <button id="healthBtn">ヘルスチェック</button>
+    <pre id="healthResult"></pre>
+
+    <script>
+        document.getElementById('healthBtn').onclick = function() {
+            fetch('/actuator/health')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('healthResult').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(err => {
+                    document.getElementById('healthResult').textContent = 'エラー: ' + err;
+                });
+        };
+    </script>
+</body>
+</html>
